@@ -1,0 +1,26 @@
+﻿<Window x:Class="Szt2.MenuItemEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Szt2"
+        xmlns:local1="clr-namespace:Szt2.ViewModels"
+        mc:Ignorable="d"
+         Title="MenuItemEditor" SizeToContent="WidthAndHeight">
+    
+    <Window.Resources>
+        <local1:EditorViewModel x:Key="vm"></local1:EditorViewModel>
+    </Window.Resources>
+
+    <Grid DataContext="{StaticResource vm}">
+        <Label Content="Név:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="nameTextBox" Text="{Binding Path=MenuItem.Name}" HorizontalAlignment="Left" Height="23" Margin="72,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+        <Label Content="Kép:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="pictureTextBox" IsEnabled="False" Text="{Binding Path=PictureSource}" HorizontalAlignment="Left" Height="23" Margin="72,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <Button Click="SelectImageClick" Content="Tallóz..." HorizontalAlignment="Left" Margin="223,42,10,0" VerticalAlignment="Top" Width="59" Height="23"/>
+        <Button Content="OK" HorizontalAlignment="Center" Margin="98,98,98,10" VerticalAlignment="Top" Width="96" Click="OkClick" Height="29"/>
+        <Label x:Name="priceLabel" Visibility="Collapsed" Content="Ár:" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="priceTextBox" Text="{Binding Path=Termek.Price}" Visibility="Collapsed" HorizontalAlignment="Left" Height="23" Margin="72,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+
+    </Grid>
+</Window>

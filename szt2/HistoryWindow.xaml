@@ -1,0 +1,25 @@
+﻿<Window x:Class="Szt2.HistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Szt2"
+        mc:Ignorable="d"
+       Title="HistoryWindow" Height="600" Width="600"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <TreeView x:Name="tvMain" FontSize="20" ItemsSource="{Binding Path=OrderList}" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate  ItemsSource="{Binding TermekList}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Date}" Margin="10" />
+                        <TextBlock Text="{Binding Amount, StringFormat={}x{0}}"/>
+                        <TextBlock Text="{Binding Termek.Name, StringFormat={} {0}}"/>
+                        <TextBlock Text="{Binding Price, StringFormat={} {0} HUF}"/>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+
+    </Grid>
+</Window>

@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PosDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="CATEGORYID" />
+          </Key>
+          <Property Name="CATEGORYID" Type="numeric" Precision="3" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CNAME" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PICTURE" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ORDERLISTITEM">
+          <Key>
+            <PropertyRef Name="ORDERLISTITEMID" />
+          </Key>
+          <Property Name="ORDERLISTITEMID" Type="numeric" Precision="3" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SUBTOTAL" Type="numeric" Precision="6" Scale="0" />
+          <Property Name="AMOUNT" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="PRODUCT" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="ORDERID" Type="numeric" Precision="3" Scale="0" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="ORDERID" />
+          </Key>
+          <Property Name="ORDERID" Type="numeric" Precision="3" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORDERDATE" Type="date" Nullable="false" />
+          <Property Name="TOTALPRICE" Type="numeric" Precision="6" Scale="0" />
+          <Property Name="RATING" Type="numeric" Precision="3" Scale="0" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="PRODUCTID" />
+          </Key>
+          <Property Name="PRODUCTID" Type="numeric" Precision="3" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PNAME" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PICTURE" Type="nvarchar" MaxLength="100" />
+          <Property Name="UNITPRICE" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="PCATEGORY" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="ORDER_ORDERLISTITEM_FK1">
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="0..1" />
+          <End Role="ORDERLISTITEM" Type="Self.ORDERLISTITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDERS">
+              <PropertyRef Name="ORDERID" />
+            </Principal>
+            <Dependent Role="ORDERLISTITEM">
+              <PropertyRef Name="ORDERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PRODUCT_CATEGORY_FK1">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="CATEGORYID" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="PCATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PRODUCT_ORDERLISTITEM_FK1">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="ORDERLISTITEM" Type="Self.ORDERLISTITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="PRODUCTID" />
+            </Principal>
+            <Dependent Role="ORDERLISTITEM">
+              <PropertyRef Name="PRODUCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PosDatabaseModelStoreContainer">
+          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERLISTITEM" EntityType="Self.ORDERLISTITEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="ORDER_ORDERLISTITEM_FK1" Association="Self.ORDER_ORDERLISTITEM_FK1">
+            <End Role="ORDERS" EntitySet="ORDERS" />
+            <End Role="ORDERLISTITEM" EntitySet="ORDERLISTITEM" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCT_CATEGORY_FK1" Association="Self.PRODUCT_CATEGORY_FK1">
+            <End Role="CATEGORY" EntitySet="CATEGORY" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCT_ORDERLISTITEM_FK1" Association="Self.PRODUCT_ORDERLISTITEM_FK1">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="ORDERLISTITEM" EntitySet="ORDERLISTITEM" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PosDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="CATEGORYID" />
+          </Key>
+          <Property Name="CATEGORYID" Type="Decimal" Precision="3" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PICTURE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCTs" Relationship="Self.PRODUCT_CATEGORY_FK1" FromRole="CATEGORY" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="ORDERLISTITEM">
+          <Key>
+            <PropertyRef Name="ORDERLISTITEMID" />
+          </Key>
+          <Property Name="ORDERLISTITEMID" Type="Decimal" Precision="3" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SUBTOTAL" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="AMOUNT" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="PRODUCT" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="ORDERID" Type="Decimal" Precision="3" Scale="0" />
+          <NavigationProperty Name="ORDER" Relationship="Self.ORDER_ORDERLISTITEM_FK1" FromRole="ORDERLISTITEM" ToRole="ORDERS" />
+          <NavigationProperty Name="PRODUCT1" Relationship="Self.PRODUCT_ORDERLISTITEM_FK1" FromRole="ORDERLISTITEM" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="ORDERID" />
+          </Key>
+          <Property Name="ORDERID" Type="Decimal" Precision="3" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORDERDATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TOTALPRICE" Type="Decimal" Precision="6" Scale="0" />
+          <Property Name="RATING" Type="Decimal" Precision="3" Scale="0" />
+          <NavigationProperty Name="ORDERLISTITEMs" Relationship="Self.ORDER_ORDERLISTITEM_FK1" FromRole="ORDERS" ToRole="ORDERLISTITEM" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="PRODUCTID" />
+          </Key>
+          <Property Name="PRODUCTID" Type="Decimal" Precision="3" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PICTURE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UNITPRICE" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="PCATEGORY" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <NavigationProperty Name="CATEGORY" Relationship="Self.PRODUCT_CATEGORY_FK1" FromRole="PRODUCT" ToRole="CATEGORY" />
+          <NavigationProperty Name="ORDERLISTITEMs" Relationship="Self.PRODUCT_ORDERLISTITEM_FK1" FromRole="PRODUCT" ToRole="ORDERLISTITEM" />
+        </EntityType>
+        <Association Name="PRODUCT_CATEGORY_FK1">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="1" />
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="CATEGORYID" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="PCATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDER_ORDERLISTITEM_FK1">
+          <End Role="ORDERS" Type="Self.ORDER" Multiplicity="0..1" />
+          <End Role="ORDERLISTITEM" Type="Self.ORDERLISTITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDERS">
+              <PropertyRef Name="ORDERID" />
+            </Principal>
+            <Dependent Role="ORDERLISTITEM">
+              <PropertyRef Name="ORDERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PRODUCT_ORDERLISTITEM_FK1">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="0..1" />
+          <End Role="ORDERLISTITEM" Type="Self.ORDERLISTITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="PRODUCTID" />
+            </Principal>
+            <Dependent Role="ORDERLISTITEM">
+              <PropertyRef Name="PRODUCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PosDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CATEGORies" EntityType="Self.CATEGORY" />
+          <EntitySet Name="ORDERLISTITEMs" EntityType="Self.ORDERLISTITEM" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDER" />
+          <EntitySet Name="PRODUCTs" EntityType="Self.PRODUCT" />
+          <AssociationSet Name="PRODUCT_CATEGORY_FK1" Association="Self.PRODUCT_CATEGORY_FK1">
+            <End Role="CATEGORY" EntitySet="CATEGORies" />
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+          </AssociationSet>
+          <AssociationSet Name="ORDER_ORDERLISTITEM_FK1" Association="Self.ORDER_ORDERLISTITEM_FK1">
+            <End Role="ORDERS" EntitySet="ORDERS" />
+            <End Role="ORDERLISTITEM" EntitySet="ORDERLISTITEMs" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUCT_ORDERLISTITEM_FK1" Association="Self.PRODUCT_ORDERLISTITEM_FK1">
+            <End Role="PRODUCT" EntitySet="PRODUCTs" />
+            <End Role="ORDERLISTITEM" EntitySet="ORDERLISTITEMs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PosDatabaseModelStoreContainer" CdmEntityContainer="PosDatabaseEntities">
+          <EntitySetMapping Name="CATEGORies">
+            <EntityTypeMapping TypeName="PosDatabaseModel.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORY">
+                <ScalarProperty Name="CATEGORYID" ColumnName="CATEGORYID" />
+                <ScalarProperty Name="CNAME" ColumnName="CNAME" />
+                <ScalarProperty Name="PICTURE" ColumnName="PICTURE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERLISTITEMs">
+            <EntityTypeMapping TypeName="PosDatabaseModel.ORDERLISTITEM">
+              <MappingFragment StoreEntitySet="ORDERLISTITEM">
+                <ScalarProperty Name="ORDERLISTITEMID" ColumnName="ORDERLISTITEMID" />
+                <ScalarProperty Name="SUBTOTAL" ColumnName="SUBTOTAL" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="PRODUCT" ColumnName="PRODUCT" />
+                <ScalarProperty Name="ORDERID" ColumnName="ORDERID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERS">
+            <EntityTypeMapping TypeName="PosDatabaseModel.ORDER">
+              <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="ORDERID" ColumnName="ORDERID" />
+                <ScalarProperty Name="ORDERDATE" ColumnName="ORDERDATE" />
+                <ScalarProperty Name="TOTALPRICE" ColumnName="TOTALPRICE" />
+                <ScalarProperty Name="RATING" ColumnName="RATING" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTs">
+            <EntityTypeMapping TypeName="PosDatabaseModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCT">
+                <ScalarProperty Name="PRODUCTID" ColumnName="PRODUCTID" />
+                <ScalarProperty Name="PNAME" ColumnName="PNAME" />
+                <ScalarProperty Name="PICTURE" ColumnName="PICTURE" />
+                <ScalarProperty Name="UNITPRICE" ColumnName="UNITPRICE" />
+                <ScalarProperty Name="PCATEGORY" ColumnName="PCATEGORY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
